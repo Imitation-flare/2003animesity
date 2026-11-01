@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>水曜日の裏側</title>
+  <meta name="description" content="ここには特に何もありません。">
+
+  <!-- OGP：Discord・X共通 -->
+  <meta property="og:title" content="水曜日の裏側">
+  <meta property="og:description" content="ここには特に何もありません。">
+  <meta property="og:image" content="https://imitation-flare.github.io/2003animesity/images/sites/embed.png">
+  <meta property="og:url" content="https://imitation-flare.github.io/2003animesity/">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#9E1028">
+
+  <!-- X（Twitter） -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="水曜日の裏側">
+  <meta name="twitter:description" content="ここには特に何もありません。">
+  <meta name="twitter:image" content="https://imitation-flare.github.io/2003animesity/images/sites/embed.png">
+
+  <!-- ファビコン -->
+  <link rel="icon" type="image/png" href="./images/sites/favicon.png">
+
+  <!-- フォント -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --main-red: #9E1028;
+      --bright-red: #D42645;
+      --dark-red: #4A0714;
+      --border-red: #70202D;
+      --black: #080306;
+      --white: #F8F0F2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      background: var(--black);
+      color: var(--white);
+      font-family: "Zen Maru Gothic", sans-serif;
+      position: relative;
+      isolation: isolate;
+    }
+
+    /* 背景 */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(
+          rgba(15, 0, 4, 0.35),
+          rgba(10, 0, 3, 0.65)
+        ),
+        url("./images/sites/background.png") center center / cover no-repeat;
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .site-main {
+      width: min(900px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 70px 0 60px;
+    }
+
+    .panel {
+      padding: 35px 30px;
+      border: 1px solid var(--border-red);
+      border-radius: 12px;
+      background: rgba(8, 2, 5, 0.86);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: #D6788A;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 0 25px;
+      color: #E8A0AF;
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .question {
+      margin: 30px 0;
+      color: var(--white);
+      font-size: clamp(18px, 4vw, 24px);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .description {
+      margin: 15px 0 30px;
+      color: #D2C2C6;
+      font-size: 14px;
+      line-height: 1.9;
+      text-align: center;
+    }
+
+    .button-area {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    button {
+      min-width: 150px;
+      padding: 13px 28px;
+      border: 1px solid var(--main-red);
+      border-radius: 30px;
+      background: var(--main-red);
+      color: white;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      border-color: var(--bright-red);
+      background: var(--bright-red);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(212, 38, 69, 0.3);
+    }
+
+    button:focus-visible {
+      outline: 3px solid #F4A0B0;
+      outline-offset: 4px;
+    }
+
+    .secondary-button {
+      border-color: #70202D;
+      background: #26070F;
+    }
+
+    .secondary-button:hover {
+      background: #5A1021;
+    }
+
+    /* 意味不明なページ */
+    #nonsenseScreen[hidden],
+    #questionScreen[hidden] {
+      display: none;
+    }
+
+    .nonsense-title {
+      color: var(--bright-red);
+      font-size: clamp(24px, 5vw, 34px);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .nonsense-content {
+      margin: 25px 0;
+      padding: 20px;
+      border: 1px solid var(--border-red);
+      border-radius: 10px;
+      background: rgba(50, 5, 17, 0.45);
+      line-height: 2;
+    }
+
+    .nonsense-content p {
+      margin: 10px 0;
+    }
+
+    .highlight {
+      color: #F07891;
+      font-weight: 700;
+    }
+
+    .site-footer {
+      padding: 20px;
+      color: #A58C93;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .site-main {
+        padding-top: 30px;
+      }
+
+      .panel {
+        padding: 28px 18px;
+      }
+
+      .button-area {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      button {
+        width: min(100%, 260px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="site-main">
+
+    <!-- 最初の画面 -->
+    <section class="panel" id="questionScreen">
+
+      <p class="eyebrow">PLEASE SELECT ONE</p>
+
+      <h1>あなたは衛宮切嗣ですか？</h1>
+
+      <p class="description">
+        以下のボタンを押してください。
+      </p>
+
+      <div class="button-area">
+        <button id="yesButton" type="button">
+          はい
+        </button>
+
+        <button id="noButton" class="secondary-button" type="button">
+          いいえ
+        </button>
+      </div>
+
+    </section>
+
+    <!-- 意味不明な画面 -->
+    <section class="panel" id="nonsenseScreen" hidden>
+
+      <p class="eyebrow">NOTICE</p>
+
+      <h2 class="nonsense-title">
+        第七回・床の確認
+      </h2>
+
+      <div class="nonsense-content">
+        <p>本日の床は正常です。</p>
+        <p>ただし、右側の左側については確認が取れていません。</p>
+        <p>スプーンは現在、<span class="highlight">3.5メートル</span>です。</p>
+        <p>明日の昨日は晴れるでしょう。</p>
+        <p>なお、当施設では靴下の裏側を表側として扱います。</p>
+        <p>なお、時崎狂三の左目は現在、プリンの消費期限を逆再生しています。</p>
+      </div>
+
+      <p class="description">
+        ご理解とご協力をお願いいたします。
+      </p>
+
+      <div class="nonsense-content">
+        <p>【重要なお知らせ】</p>
+        <p>現在、プリンの概念が不安定になっています。</p>
+        <p>各自、落ち着いて四角形を確認してください。</p>
+        <p>双竜が蘇る。</p>
+        <p>問い合わせ先：昨日の午前25時</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>本ページの内容は予告なく変更される場合があります。</p>
+  </footer>
+
+  <script>
+    // 移動先
+    const SURVEV_URL = "https://survev.io/";
+
+    // 5%で移動する動画
+    // フードストア
+    const ELLEN_VIDEO_URL = "https://www.youtube.com/watch?v=RDfTmIP8tbQ";
+
+    // 画面要素
+    const questionScreen = document.getElementById("questionScreen");
+    const nonsenseScreen = document.getElementById("nonsenseScreen");
+
+    const yesButton = document.getElementById("yesButton");
+    const noButton = document.getElementById("noButton");
+
+    // 「はい」：意味不明なページへ
+    yesButton.addEventListener("click", () => {
+      questionScreen.hidden = true;
+      nonsenseScreen.hidden = false;
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+
+    // 「いいえ」：95% / 5% のランダム移動
+    noButton.addEventListener("click", () => {
+      const random = Math.random();
+
+      if (random < 0.05) {
+        window.location.href = ELLEN_VIDEO_URL;
+      } else {
+        window.location.href = SURVEV_URL;
+      }
+    });
+  </script>
+
+</body>
+</html>
